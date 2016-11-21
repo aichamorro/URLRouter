@@ -65,6 +65,11 @@ class URLMatchingTests: QuickSpec {
                 expect(test(URL(string: "app://test2")!)).to(beFalse())
             }
             
+            it("") {
+                let test = URLMatcherFactory.matcher(pattern: "app://test/*")
+                expect(test(URL(string: "app://test")!)).to(beTrue())
+            }
+            
             it("matches routes with wildcards") {
                 let test = URLMatcherFactory.matcher(pattern: "app://*")
                 

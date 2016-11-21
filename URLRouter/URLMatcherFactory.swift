@@ -53,17 +53,17 @@ public struct URLMatcherFactory {
     }
 }
 
-private func | (lhs: @escaping StringTransform, rhs: @escaping StringTransform) -> StringTransform {
+private func & (lhs: @escaping StringTransform, rhs: @escaping StringTransform) -> StringTransform {
     return { string in lhs(rhs(string)) }
 }
 
 private extension StringTransforms {
     static func normalizeURL(_ string: String) -> String {
         return (
-            StringTransforms.removeStartingAndTrailingSlashes |
-                StringTransforms.normalizeRegex |
-                StringTransforms.normalizeWildcards |
-                StringTransforms.normalizeURLRouteParameter |
+            StringTransforms.removeStartingAndTrailingSlashes &
+                StringTransforms.normalizeRegex &
+                StringTransforms.normalizeWildcards &
+                StringTransforms.normalizeURLRouteParameter &
                 StringTransforms.normalizeSlashForRegex
             )(string)
     }

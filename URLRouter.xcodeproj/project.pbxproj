@@ -16,6 +16,9 @@
 		3931FD8B1DE237B000A96DF6 /* RegularExpression+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3931FD8A1DE237B000A96DF6 /* RegularExpression+URL.swift */; };
 		3931FD901DE2391F00A96DF6 /* StringTransformations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3931FD8F1DE2391F00A96DF6 /* StringTransformations.swift */; };
 		3931FD921DE239D700A96DF6 /* String+Range.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3931FD911DE239D700A96DF6 /* String+Range.swift */; };
+		3931FD941DE3179C00A96DF6 /* URLRoutingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3931FD931DE3179C00A96DF6 /* URLRoutingTests.swift */; };
+		3931FD961DE31C1C00A96DF6 /* URLRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3931FD951DE31C1C00A96DF6 /* URLRouter.swift */; };
+		3931FD981DE3326300A96DF6 /* RegularExpressionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3931FD971DE3326300A96DF6 /* RegularExpressionTests.swift */; };
 		8CDDF67404378DD956BD7248 /* Pods_URLRouterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8545C2842105D488A14F291B /* Pods_URLRouterTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -42,6 +45,9 @@
 		3931FD8A1DE237B000A96DF6 /* RegularExpression+URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RegularExpression+URL.swift"; sourceTree = "<group>"; };
 		3931FD8F1DE2391F00A96DF6 /* StringTransformations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringTransformations.swift; sourceTree = "<group>"; };
 		3931FD911DE239D700A96DF6 /* String+Range.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Range.swift"; sourceTree = "<group>"; };
+		3931FD931DE3179C00A96DF6 /* URLRoutingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLRoutingTests.swift; sourceTree = "<group>"; };
+		3931FD951DE31C1C00A96DF6 /* URLRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLRouter.swift; sourceTree = "<group>"; };
+		3931FD971DE3326300A96DF6 /* RegularExpressionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegularExpressionTests.swift; sourceTree = "<group>"; };
 		5F29498910EC396F9C4DACD7 /* Pods-URLRouter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-URLRouter.debug.xcconfig"; path = "Pods/Target Support Files/Pods-URLRouter/Pods-URLRouter.debug.xcconfig"; sourceTree = "<group>"; };
 		8545C2842105D488A14F291B /* Pods_URLRouterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_URLRouterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E775999B36DF4A992B98278 /* Pods-URLRouterTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-URLRouterTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-URLRouterTests/Pods-URLRouterTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -99,6 +105,7 @@
 				3931FD8A1DE237B000A96DF6 /* RegularExpression+URL.swift */,
 				3931FD8F1DE2391F00A96DF6 /* StringTransformations.swift */,
 				3931FD911DE239D700A96DF6 /* String+Range.swift */,
+				3931FD951DE31C1C00A96DF6 /* URLRouter.swift */,
 			);
 			path = URLRouter;
 			sourceTree = "<group>";
@@ -109,6 +116,8 @@
 				3931FD7A1DE2082700A96DF6 /* URLRouterTests.swift */,
 				3931FD7C1DE2082700A96DF6 /* Info.plist */,
 				3931FD861DE2088200A96DF6 /* URLMatchingTests.swift */,
+				3931FD931DE3179C00A96DF6 /* URLRoutingTests.swift */,
+				3931FD971DE3326300A96DF6 /* RegularExpressionTests.swift */,
 			);
 			path = URLRouterTests;
 			sourceTree = "<group>";
@@ -331,6 +340,7 @@
 			files = (
 				3931FD921DE239D700A96DF6 /* String+Range.swift in Sources */,
 				3931FD901DE2391F00A96DF6 /* StringTransformations.swift in Sources */,
+				3931FD961DE31C1C00A96DF6 /* URLRouter.swift in Sources */,
 				3931FD8B1DE237B000A96DF6 /* RegularExpression+URL.swift in Sources */,
 				3931FD891DE2091500A96DF6 /* URLMatcherFactory.swift in Sources */,
 			);
@@ -340,8 +350,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3931FD981DE3326300A96DF6 /* RegularExpressionTests.swift in Sources */,
 				3931FD871DE2088200A96DF6 /* URLMatchingTests.swift in Sources */,
 				3931FD7B1DE2082700A96DF6 /* URLRouterTests.swift in Sources */,
+				3931FD941DE3179C00A96DF6 /* URLRoutingTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
