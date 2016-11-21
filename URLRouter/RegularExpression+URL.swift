@@ -18,7 +18,7 @@ internal struct StringTests {
     }
 }
 
-fileprivate extension NSRegularExpression {
+internal extension NSRegularExpression {
     static private var schemePattern: String = {
         return "^[a-zA-Z][a-zA-Z0-9]*"
     }()
@@ -33,6 +33,10 @@ fileprivate extension NSRegularExpression {
     
     static private var urlPattern: String = {
         return "\(NSRegularExpression.schemePattern):\\/\\/\(NSRegularExpression.hostPattern)\(NSRegularExpression.pathPattern)"
+    }()
+    
+    static private var pathParametersPattern: String = {
+        return ":([a-zA-Z][a-zA-Z0-9]*[^/]{0,1})"
     }()
     
     class func schemeRegex(options: NSRegularExpression.Options = []) -> NSRegularExpression {
@@ -51,6 +55,28 @@ fileprivate extension NSRegularExpression {
         return regex
     }
     
+    class func pathParametersRegex(options: NSRegularExpression.Options = []) -> NSRegularExpression {
+        guard let regex = try? NSRegularExpression(pattern: NSRegularExpression.pathParametersPattern, options: options) else {
+            fatalError("The regex to capture path parameters is not correct")
+        }
+        
+        return regex
+    }
+    
+    class func pathParametersValues(for routePattern: String, options: NSRegularExpression.Options = []) -> NSRegularExpression {
+        let pathParametersScanRegex = NSRegularExpression.pathParametersRegex(options: options)
+        let regexPattern = pathParametersScanRegex.stringByReplacingMatches(in: routePattern, options: [], range: routePattern.rangeForSelf, withTemplate: "(.*)")
+        
+        guard let regex = try? NSRegularExpression(pattern: regexPattern, options: options) else {
+            fatalError()
+        }
+        
+        return regex
+    }
+
+}
+
+internal extension NSRegularExpression {
     func test(string: String, options: NSRegularExpression.MatchingOptions = []) -> Bool {
         let matches = self.matches(in: string, options: options, range: NSMakeRange(0, string.characters.count))
         
@@ -60,5 +86,5 @@ fileprivate extension NSRegularExpression {
         
         let testResult = matches.first!.rangeAt(0)
         return testResult.location == 0 && testResult.length == string.characters.count
-    }
+    }   
 }

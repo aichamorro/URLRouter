@@ -16,7 +16,7 @@ class URLRoutingTests: QuickSpec {
         describe("As a developer I would like to be able to associate actions to URL patterns") {
             it("Can associate a actions to patterns") {
                 var hasExecutedAction = false
-                let entry = URLRouterEntryFactory.with(pattern: "app://test") {
+                let entry = URLRouterEntryFactory.with(pattern: "app://test") { _ in 
                     hasExecutedAction = true
                 }
                 
@@ -30,11 +30,11 @@ class URLRoutingTests: QuickSpec {
             it("Can hold different entries") {
                 var hasExecutedAction = false
                 
-                let patternForTestHost = URLRouterEntryFactory.with(pattern: "app://test") {
+                let patternForTestHost = URLRouterEntryFactory.with(pattern: "app://test") { _ in
                     fail("It shouldn't execute this")
                 }
                 
-                let patternForGoodHost = URLRouterEntryFactory.with(pattern: "app://good") {
+                let patternForGoodHost = URLRouterEntryFactory.with(pattern: "app://good") { _ in
                     hasExecutedAction = true
                 }
                 
@@ -48,7 +48,7 @@ class URLRoutingTests: QuickSpec {
             it("Can handle wildcards") {
                 var numberOfExecutions = 0
                 
-                let patternForTestHost = URLRouterEntryFactory.with(pattern: "app://test/*") {
+                let patternForTestHost = URLRouterEntryFactory.with(pattern: "app://test/*") { _ in
                     numberOfExecutions = numberOfExecutions + 1
                 }
                 
@@ -63,7 +63,7 @@ class URLRoutingTests: QuickSpec {
             
             it("Can handle path parameters") {
                 var hasExecutedAction = false
-                let patternForTestHost = URLRouterEntryFactory.with(pattern: "app://test/:id") {
+                let patternForTestHost = URLRouterEntryFactory.with(pattern: "app://test/:id") { _ in
                     hasExecutedAction = true
                 }
                 
@@ -72,6 +72,30 @@ class URLRoutingTests: QuickSpec {
                 
                 expect(router(url)).to(beTrue())
                 expect(hasExecutedAction).to(beTrue())
+            }
+            
+            context("Receiving parameters") {
+                it("receives path parameters") {
+                    let entry = URLRouterEntryFactory.with(pattern: "app://test/:id") { parameters in
+                        expect(parameters["id"]).to(equal("5"))
+                    }
+                    let router = URLRouterFactory.with(entries: [entry])
+                    let url = URL(string: "app://test/5")!
+                    
+                    expect(router(url)).to(beTrue())
+                }
+                
+                it("recieves more thatn one path parameter") {
+                    let entry = URLRouterEntryFactory.with(pattern: "app://test/:id/:action/test") { parameters in
+                        expect(parameters["id"]).to(equal("5"))
+                        expect(parameters["action"]).to(equal("edit"))
+                    }
+                    
+                    let router = URLRouterFactory.with(entries: [entry])
+                    let url = URL(string: "app://test/5/edit/test")!
+                    
+                    expect(router(url)).to(beTrue())
+                }
             }
         }
     }

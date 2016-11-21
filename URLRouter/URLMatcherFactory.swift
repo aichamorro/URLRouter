@@ -57,7 +57,7 @@ private func & (lhs: @escaping StringTransform, rhs: @escaping StringTransform) 
     return { string in lhs(rhs(string)) }
 }
 
-private extension StringTransforms {
+internal extension StringTransforms {
     static func normalizeURL(_ string: String) -> String {
         return (
             StringTransforms.removeStartingAndTrailingSlashes &
