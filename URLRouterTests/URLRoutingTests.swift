@@ -16,7 +16,7 @@ class URLRoutingTests: QuickSpec {
         describe("As a developer I would like to be able to associate actions to URL patterns") {
             it("Can associate a actions to patterns") {
                 var hasExecutedAction = false
-                let entry = URLRouterEntryFactory.with(pattern: "app://test") { _ in 
+                let entry = URLRouterEntryFactory.with(pattern: "app://test") { _ in
                     hasExecutedAction = true
                 }
                 
@@ -76,7 +76,8 @@ class URLRoutingTests: QuickSpec {
             
             context("Receiving parameters") {
                 it("receives path parameters") {
-                    let entry = URLRouterEntryFactory.with(pattern: "app://test/:id") { parameters in
+                    let entry = URLRouterEntryFactory.with(pattern: "app://test/:id") { url, parameters in
+                        expect(url.absoluteString).to(equal("app://test/5"))
                         expect(parameters["id"]).to(equal("5"))
                     }
                     let router = URLRouterFactory.with(entries: [entry])
@@ -85,14 +86,42 @@ class URLRoutingTests: QuickSpec {
                     expect(router(url)).to(beTrue())
                 }
                 
-                it("recieves more thatn one path parameter") {
-                    let entry = URLRouterEntryFactory.with(pattern: "app://test/:id/:action/test") { parameters in
+                it("receives more than one path parameter") {
+                    let entry = URLRouterEntryFactory.with(pattern: "app://test/:id/:action/test") { url, parameters in
+                        expect(url.absoluteString).to(equal("app://test/5/edit/test"))
                         expect(parameters["id"]).to(equal("5"))
                         expect(parameters["action"]).to(equal("edit"))
                     }
                     
                     let router = URLRouterFactory.with(entries: [entry])
                     let url = URL(string: "app://test/5/edit/test")!
+                    
+                    expect(router(url)).to(beTrue())
+                }
+                
+                it("receives parameters from the url") {
+                    let entry = URLRouterEntryFactory.with(pattern: "app://test/url")
+                    { url, parameters in
+                        expect(parameters["id"]).to(equal("5"))
+                        expect(parameters["action"]).to(equal("edit"))
+                    }
+                    
+                    let router = URLRouterFactory.with(entries: [entry])
+                    let url = URL(string: "app://test/url?id=5&action=edit")!
+                    
+                    expect(router(url)).to(beTrue())
+                }
+                
+                it("receives parameters from the url and the path") {
+                    let entry = URLRouterEntryFactory.with(pattern: "app://test/:id/:action")
+                    { url, parameters in
+                        expect(parameters["id"]).to(equal("5"))
+                        expect(parameters["action"]).to(equal("edit"))
+                        expect(parameters["user"]).to(equal("user-name"))
+                    }
+                    
+                    let router = URLRouterFactory.with(entries: [entry])
+                    let url = URL(string: "app://test/5/edit?user=user-name")!
                     
                     expect(router(url)).to(beTrue())
                 }

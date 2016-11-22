@@ -18,27 +18,33 @@ internal struct StringTests {
     }
 }
 
-internal extension NSRegularExpression {
-    static private var schemePattern: String = {
+fileprivate extension NSRegularExpression {
+    static var schemePattern: String = {
         return "^[a-zA-Z][a-zA-Z0-9]*"
     }()
     
-    static private var hostPattern: String = {
+    static var hostPattern: String = {
         return "[a-zA-Z0-9_\\-.]*"
     }()
     
-    static private var pathPattern: String = {
+    static var pathPattern: String = {
         return "(?:\\/:[a-zA-Z]+|\\/[a-zA-Z0-9\\-]+)*"
     }()
     
-    static private var urlPattern: String = {
+    static var urlPattern: String = {
         return "\(NSRegularExpression.schemePattern):\\/\\/\(NSRegularExpression.hostPattern)\(NSRegularExpression.pathPattern)"
     }()
     
-    static private var pathParametersPattern: String = {
+    static var pathParametersPattern: String = {
         return ":([a-zA-Z][a-zA-Z0-9]*[^/]{0,1})"
     }()
-    
+
+    static var urlParametersPattern: String = {
+       return "[a-zA-Z][a-zA-Z0-9@.\\-_]*=[a-zA-Z0-9@.\\-_]+"
+    }()
+}
+
+internal extension NSRegularExpression {
     class func schemeRegex(options: NSRegularExpression.Options = []) -> NSRegularExpression {
         guard let regex = try? NSRegularExpression(pattern: NSRegularExpression.schemePattern, options: options) else {
             fatalError("The schemes to determine valid urls is not correct")
@@ -63,9 +69,17 @@ internal extension NSRegularExpression {
         return regex
     }
     
+    class func urlParametersRegex(options: NSRegularExpression.Options = []) -> NSRegularExpression {
+        guard let regex = try? NSRegularExpression(pattern: NSRegularExpression.urlParametersPattern, options: options) else {
+            fatalError("The regex to capture url parameters is not correct")
+        }
+        
+        return regex
+    }
+    
     class func pathParametersValues(for routePattern: String, options: NSRegularExpression.Options = []) -> NSRegularExpression {
         let pathParametersScanRegex = NSRegularExpression.pathParametersRegex(options: options)
-        let regexPattern = pathParametersScanRegex.stringByReplacingMatches(in: routePattern, options: [], range: routePattern.rangeForSelf, withTemplate: "(.*)")
+        let regexPattern = pathParametersScanRegex.stringByReplacingMatches(in: routePattern, options: [], range: routePattern.rangeForSelf, withTemplate: "([^?]*)")
         
         guard let regex = try? NSRegularExpression(pattern: regexPattern, options: options) else {
             fatalError()
@@ -73,7 +87,6 @@ internal extension NSRegularExpression {
         
         return regex
     }
-
 }
 
 internal extension NSRegularExpression {
