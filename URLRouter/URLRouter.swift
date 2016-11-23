@@ -8,18 +8,20 @@
 
 import Foundation
 
-public typealias URLRouterAction = (URL, Dictionary<String, String>) -> Void
+public typealias URLRouterAction = (URL, Dictionary<String, String>) -> Any?
 public typealias ParametersCollector<T> = (URL) -> T
 public typealias URLRouterEntry = (test: URLTest, action: URLRouterAction, paramsCollector: ParametersCollector<Dictionary<String, String>>?)
-public typealias URLRouter = (URL) -> Bool
+public typealias URLRouterResultHandler = (Any?) -> Void
+public typealias URLRouter = (URL, URLRouterResultHandler?) -> Bool
 public typealias URLRouterEngine = ([URLRouterEntry]) -> URLRouter
 
 public struct URLRouterEngineFactory {
     public static let simple: URLRouterEngine = { entries in
-        return { url in
+        return { url, resultHandler in
             for routerEntry in entries {
                 if routerEntry.test(url) == true {
-                    routerEntry.action(url, routerEntry.paramsCollector?(url) ?? [:])
+                    let result = routerEntry.action(url, routerEntry.paramsCollector?(url) ?? [:])
+                    resultHandler?(result)
                     
                     return true
                 }
