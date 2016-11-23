@@ -8,9 +8,9 @@
 
 import Foundation
 
-public typealias URLRouterAction = (URL, Dictionary<String, String>) -> Any?
+public typealias URLRouterResult = (URL, Dictionary<String, String>) -> Any?
 public typealias ParametersCollector<T> = (URL) -> T
-public typealias URLRouterEntry = (test: URLTest, action: URLRouterAction, paramsCollector: ParametersCollector<Dictionary<String, String>>?)
+public typealias URLRouterEntry = (test: URLTest, resultBuilder: URLRouterResult, paramsCollector: ParametersCollector<Dictionary<String, String>>?)
 public typealias URLRouterResultHandler = (Any?) -> Void
 public typealias URLRouter = (URL, URLRouterResultHandler?) -> Bool
 public typealias URLRouterEngine = ([URLRouterEntry]) -> URLRouter
@@ -20,7 +20,7 @@ public struct URLRouterEngineFactory {
         return { url, resultHandler in
             for routerEntry in entries {
                 if routerEntry.test(url) == true {
-                    let result = routerEntry.action(url, routerEntry.paramsCollector?(url) ?? [:])
+                    let result = routerEntry.resultBuilder(url, routerEntry.paramsCollector?(url) ?? [:])
                     resultHandler?(result)
                     
                     return true
@@ -33,12 +33,12 @@ public struct URLRouterEngineFactory {
 }
 
 public struct URLRouterEntryFactory {
-    public static func with(pattern: String, action: @escaping URLRouterAction) -> URLRouterEntry {
-        return URLRouterEntryFactory.with(pattern: pattern, paramsCollector: ParametersCollectorFactory.default(pattern: pattern), action: action)
+    public static func with(pattern: String, resultBuilder: @escaping URLRouterResult) -> URLRouterEntry {
+        return URLRouterEntryFactory.with(pattern: pattern, paramsCollector: ParametersCollectorFactory.default(pattern: pattern), resultBuilder: resultBuilder)
     }
     
-    public static func with(pattern: String, paramsCollector: @escaping ParametersCollector<[String:String]>, action: @escaping URLRouterAction) -> URLRouterEntry {
-        return (URLMatcherFactory.matcher(pattern: pattern), action, paramsCollector)
+    public static func with(pattern: String, paramsCollector: @escaping ParametersCollector<[String:String]>, resultBuilder: @escaping URLRouterResult) -> URLRouterEntry {
+        return (URLMatcherFactory.matcher(pattern: pattern), resultBuilder, paramsCollector)
     }
 }
 
