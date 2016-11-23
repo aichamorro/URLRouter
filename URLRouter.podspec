@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "URLRouter"
-  s.version          = "1.0.0"
+  s.version          = "1.1.0"
   s.summary          = "With URLRouter you can assign actions to URL patterns"
 
 # This description is used to generate tags and improve search results.
