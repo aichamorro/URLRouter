@@ -81,6 +81,7 @@
 		3931FD621DE2082700A96DF6 = {
 			isa = PBXGroup;
 			children = (
+				399B2ED81DF0B83D0095A048 /* URLRouter-ReactNative */,
 				3931FD6E1DE2082700A96DF6 /* URLRouter */,
 				3931FD791DE2082700A96DF6 /* URLRouterTests */,
 				3931FD6D1DE2082700A96DF6 /* Products */,
@@ -123,6 +124,13 @@
 				3931FD971DE3326300A96DF6 /* RegularExpressionTests.swift */,
 			);
 			path = URLRouterTests;
+			sourceTree = "<group>";
+		};
+		399B2ED81DF0B83D0095A048 /* URLRouter-ReactNative */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "URLRouter-ReactNative";
 			sourceTree = "<group>";
 		};
 		4A330FA47406DA2BF22B4A5A /* Pods */ = {

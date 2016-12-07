@@ -15,5 +15,6 @@ FOUNDATION_EXPORT double URLRouterVersionNumber;
 FOUNDATION_EXPORT const unsigned char URLRouterVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <URLRouter/PublicHeader.h>
-
-
+typedef id(^URLRouterResult)(NSURL * _Nonnull url, NSDictionary<String *, String *> * _Nonnull parameters);
+typedef void(^URLRouterResultHandler)(id result);
+typedef BOOL(^URLRouter)(NSURL * _Nonnull url, URLRouterResultHandler handler);

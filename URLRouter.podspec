@@ -28,5 +28,5 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = '10.10'
   s.requires_arc = true
 
-  s.source_files = 'URLRouter/**/*.swift' 
+  s.source_files = 'URLRouter/**/*.{swift,h}' 
 end

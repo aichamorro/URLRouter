@@ -36,7 +36,7 @@ fileprivate extension NSRegularExpression {
     }()
     
     static var pathParametersPattern: String = {
-        return ":([a-zA-Z][a-zA-Z0-9]*[^/]{0,1})"
+        return ":([a-zA-Z][a-zA-Z0-9]*)[^/]{0,1}"
     }()
 
     static var urlParametersPattern: String = {

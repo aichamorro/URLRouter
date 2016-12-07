@@ -133,3 +133,25 @@ public struct ParametersCollectorFactory {
         return { url in collectors.reduce([:]) {$0 + $1(url)} }
     }
 }
+
+// Objective-C support
+@objc public class URLRouterEntryClass: NSObject {
+    let entry: URLRouterEntry
+    
+    init(pattern: String, resultBuilder: @escaping ((URL, Dictionary<String, String>) -> Any?)) {
+        entry = URLRouterEntryFactory.with(pattern: pattern, resultBuilder: resultBuilder)
+    }
+}
+
+@objc public class URLRouterFactoryClass: NSObject {
+    @objc public class func entry(pattern: String, resultBuilder: @escaping ((URL, Dictionary<String, String>) -> Any?)) -> URLRouterEntryClass {
+        return URLRouterEntryClass(pattern: pattern, resultBuilder: resultBuilder)
+    }
+    
+    @objc public class func router(entries: [URLRouterEntryClass]) -> (URL, URLRouterResultHandler?) -> Bool {
+        let converted = entries.map {$0.entry}
+        
+        return URLRouterFactory.with(entries: converted)
+    }
+}
+
