@@ -6,7 +6,7 @@
 //  Copyright © 2016 Alberto Chamorro. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for URLRouter.
 FOUNDATION_EXPORT double URLRouterVersionNumber;
@@ -15,6 +15,6 @@ FOUNDATION_EXPORT double URLRouterVersionNumber;
 FOUNDATION_EXPORT const unsigned char URLRouterVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <URLRouter/PublicHeader.h>
-typedef id(^URLRouterResult)(NSURL * _Nonnull url, NSDictionary<String *, String *> * _Nonnull parameters);
-typedef void(^URLRouterResultHandler)(id result);
-typedef BOOL(^URLRouter)(NSURL * _Nonnull url, URLRouterResultHandler handler);
+typedef id _Nullable(^URLRouterResult)(NSURL * _Nonnull url, NSDictionary<NSString *, NSString *> * _Nonnull parameters);
+typedef void(^URLRouterResultHandler)(id _Nullable result);
+typedef BOOL(^URLRouter)(NSURL * _Nonnull url, URLRouterResultHandler _Nonnull handler);
